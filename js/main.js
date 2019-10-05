@@ -22,7 +22,7 @@ var getRandomComments = function () {
   var coments = [];
   for (var j = 0; j < 6 ; j++) {
     coment = {
-      avatar: img/' + j + '.svg;
+      avatar: "img/avatar-" + j + ".svg";
       message: getRandomComments();
       name: getRandomName();
 	};
@@ -34,7 +34,7 @@ var generatePhotoDescriptions = function () {
   var photos = [];
   for (var i = 0; i < 25; i++) {
     var photo = {
-      url: photos/" + i + ".jpg;
+      url: "photos/" + i + ".jpg";
       description: '...';
       likes: getRandomLike(15, 200);
       comments: generateComments();
