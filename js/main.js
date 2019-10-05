@@ -16,26 +16,31 @@ var getRandomName = function () {
 };
 var getRandomComments = function () {
   return FLOODS[Math.floor(Math.random() * FLOODS.length)];
+  return FLOODS[Math.floor(Math.random() * FLOODS.length)];
 };
-
-var descriptionPhotos = function () {
+ var generateComments = function () {
+  var coments = [];
+  for (var j = 0; j < 6 ; j++) {
+    coment = {
+      avatar: img/' + j + '.svg;
+      message: getRandomComments();
+      name: getRandomName();
+	};
+	return coments;
+  };
+ };
+ 
+var generatePhotoDescriptions = function () {
   var photos = [];
   for (var i = 0; i < 25; i++) {
-    var photo = {};
-    photo.url = photos/i.jpg;
-    photo.description = ' ';
-    photo.likes = getRandomLike(15, 200);
-    photo.comments = [];
-    for (var j = 0; j < 6 ; j++) {
-      var comment = {};
-	  comments.avatar = img/j.svg;
-	  comments.message = getRandomComments();
-	  comments.name = getRandomName();
-	  comments.push(comment);
+    var photo = {
+      url: photos/" + i + ".jpg;
+      description: '...';
+      likes: getRandomLike(15, 200);
+      comments: generateComments();
 	};
-    photos.push(photo);
-  }
+  };
   return photos;
 };
 
-var picture = descriptionPhotos();
+var picture = generatePhotoDescriptions();
