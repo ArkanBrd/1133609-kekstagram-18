@@ -9,7 +9,8 @@ var FLOODS = ['Всё отлично!', 'В целом всё неплохо. Н
 
 var GUYS = ['Гуша', 'Курепа', 'МКС', 'Коняк', 'Аркан', 'Теплый'];
 
-var housePriceField = document.querySelector('.pictures');
+var uploadPhotoElement = document.querySelector('.picture');
+var uploadPhotoTemplate = document.querySelector('#picture');
 
 var getRandomName = function () {
   return GUYS[Math.floor(Math.random() * GUYS.length)];
@@ -46,9 +47,9 @@ var generatePhotoDescriptions = function () {
 
 var pictures = generatePhotoDescriptions();
 var renderPicture = function (picture) {
-  var pictureElement = housePriceField.cloneNode(true);
+  var pictureElement = uploadPhotoTemplate.cloneNode(true);
 
-  pictureElement.querySelector('.picture__img').textContent = picture.url;
+  pictureElement.querySelector('.picture__img').src = picture.url;
   pictureElement.querySelector('.picture__likes').textContent = picture.likes;
   pictureElement.querySelector('.picture__comments').textContent = picture.comments;
 
@@ -59,6 +60,4 @@ var fragment = document.createDocumentFragment();
 for (var i = 0; i < pictures.length; i++) {
   fragment.appendChild(renderPicture(pictures[i]));
 }
-housePriceField.appendChild(fragment);
-
-housePriceField.querySelector('.pictures').classList.remove('hidden');
+uploadPhotoElement.appendChild(fragment);
