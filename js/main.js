@@ -9,7 +9,7 @@ var FLOODS = ['Всё отлично!', 'В целом всё неплохо. Н
 
 var GUYS = ['Гуша', 'Курепа', 'МКС', 'Коняк', 'Аркан', 'Теплый'];
 
-var uploadPhotoElement = document.querySelector('.picture');
+var uploadPhotoElement = document.querySelector('.pictures');
 var uploadPhotoTemplate = document.querySelector('#picture');
 
 var getRandomName = function () {
@@ -20,7 +20,7 @@ var getRandomComments = function () {
 };
 var generateComments = function () {
   var coments = [];
-  for (var j = 0; j < 6; j++) {
+  for (var j = 1; j < 7; j++) {
     var coment = {
       avatar: 'img/avatar-' + j + '.svg',
       message: getRandomComments() + '. ' + getRandomComments(),
@@ -33,7 +33,7 @@ var generateComments = function () {
 
 var generatePhotoDescriptions = function () {
   var photos = [];
-  for (var i = 0; i < 25; i++) {
+  for (var i = 1; i < 26; i++) {
     var photo = {
       url: 'photos/' + i + '.jpg',
       description: '...',
@@ -47,11 +47,11 @@ var generatePhotoDescriptions = function () {
 
 var pictures = generatePhotoDescriptions();
 var renderPicture = function (picture) {
-  var pictureElement = uploadPhotoTemplate.cloneNode(true);
+  var pictureElement = uploadPhotoTemplate.content.cloneNode(true);
 
   pictureElement.querySelector('.picture__img').src = picture.url;
   pictureElement.querySelector('.picture__likes').textContent = picture.likes;
-  pictureElement.querySelector('.picture__comments').textContent = picture.comments;
+  pictureElement.querySelector('.picture__comments').textContent = picture.comments.message;
 
   return pictureElement;
 };
