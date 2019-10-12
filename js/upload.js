@@ -16,11 +16,11 @@ var editImgFormOpen = uploadField.querySelector('.img-upload__overlay');
 var editImgFormClose = editImgFormOpen.querySelector('#upload-cancel');
 
 // Смена эффекта изображения
-var changeEffect = editImgFormOpen.querySelector('img-upload__preview-container');
+var changeEffect = editImgFormOpen.querySelector('.img-upload__preview-container');
 
 // Радио кнопки
 var effectRadio = changeEffect.querySelector('.effects__radio');
-var effectForm = changeEffect.querySelector('effect-none');
+var effectForm = changeEffect.querySelector('.effects__list');
 
 // Функция определения эффекта
 var onEditEffect = function () {
@@ -29,16 +29,16 @@ var onEditEffect = function () {
       changeEffect.className = 'effects__preview  effects__preview--chrome';
       break;
     case 'sepia':
-      changeEffect.className = 'effects__preview  effects__preview--sepia';
+      changeEffect.className = 'effect-sepia';
       break;
     case 'marvin':
-      changeEffect.className = 'effects__preview  effects__preview--marvin';
+      changeEffect.className = 'effect-marvin';
       break;
     case 'phobos':
-      changeEffect.className = 'effects__preview  effects__preview--phobos';
+      changeEffect.className = 'effect-phobos';
       break;
     case 'heat':
-      changeEffect.className = 'effects__preview  effects__preview--heat';
+      changeEffect.className = 'effect-heat';
       break;
   }
 };
