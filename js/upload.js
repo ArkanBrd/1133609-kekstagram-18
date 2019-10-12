@@ -16,33 +16,64 @@ var editImgFormOpen = uploadField.querySelector('.img-upload__overlay');
 var editImgFormClose = editImgFormOpen.querySelector('#upload-cancel');
 
 // Смена эффекта изображения
-var changeEffect = editImgFormOpen.querySelector('.img-upload__preview-container');
+var effectList = document.querySelector('.effects__list');
 
 // Радио кнопки
-var effectRadio = changeEffect.querySelector('.effects__radio');
-var effectForm = changeEffect.querySelector('.effects__list');
+var effectRadio = effectList.querySelector('.effects__radio');
+var effectForm = uploadField.querySelector('#upload-select-image');
+
+//Изменение глубины эффекта, накладываемого на изображение
+var effectLevelPin = editImgFormOpen.querySelector('.effect-level__pin');
+var effectLevelValue = editImgFormOpen.querySelector('.effect-level__value');
+var imgUploadPreview = editImgFormOpen.querySelector('.img-upload__preview');
 
 // Функция определения эффекта
 var onEditEffect = function () {
   switch (effectForm.effect.value) {
     case 'chrome':
-      changeEffect.className = 'effects__preview  effects__preview--chrome';
+      effectList.className = 'effects__preview  effects__preview--chrome';
       break;
     case 'sepia':
-      changeEffect.className = 'effect-sepia';
+      effectList.className = 'effects__preview  effects__preview--sepia';
       break;
     case 'marvin':
-      changeEffect.className = 'effect-marvin';
+      effectList.className = 'effects__preview  effects__preview--marvin';
       break;
     case 'phobos':
-      changeEffect.className = 'effect-phobos';
+      effectList.className = 'effects__preview  effects__preview--phobos';
       break;
     case 'heat':
-      changeEffect.className = 'effect-heat';
+      effectList.className = 'effects__preview  effects__preview--heat';
+      break;
+    case 'none':
+      effectList.className = 'effects__preview  effects__preview--none';
       break;
   }
 };
 
+var onDifEffects = function () {
+  switch (effectForm.effect.value) {
+    case 'chrome':
+      effectLevelValue.filter: grayscale(0..1);
+      break;
+    case 'sepia':
+      effectLevelValue.filter: sepia(0..1);
+      break;
+    case 'marvin':
+      effectLevelValue.filter: invert(0..100%);
+      break;
+    case 'phobos':
+      effectLevelValue.filter: blur(0..3px);
+      break;
+    case 'heat':
+      effectLevelValue.filter: brightness(1..3);
+      break;
+    case 'none':
+      effectLevelValue.filter: remove;
+      break;
+  };
+};
+//Открытие и закрытие через ESC формы редактирования
 firstUploadFieldOpen.addEventListener('change', function () {
   editImgFormOpen.classList.remove('hidden');
 
@@ -53,8 +84,12 @@ firstUploadFieldOpen.addEventListener('change', function () {
   });
 });
 
+//Закрытие формы редактирования
 editImgFormClose.addEventListener('click', function () {
   editImgFormOpen.classList.add('hidden');
 });
 
-effectRadio.addEventListener('change', onEditEffect);
+effectRadio.addEventListener('click', onEditEffect);
+
+//Добавляем пин слайдера
+effectLevelPin.addEventListener('mouseup', );
