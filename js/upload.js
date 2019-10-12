@@ -20,23 +20,24 @@ var changeEffect = editImgFormOpen.querySelector('img-upload__preview-container'
 
 // Радио кнопки
 var effectRadio = changeEffect.querySelector('.effects__radio');
+var effectForm = changeEffect.querySelector('effect-none');
 
 // Функция определения эффекта
 var onEditEffect = function () {
-  switch (effectRadio) {
-    case form.effect.value('chrome'):
+  switch (effectForm.effect.value) {
+    case 'chrome':
       changeEffect.className = 'effects__preview  effects__preview--chrome';
       break;
-    case form.effect.value('sepia'):
+    case 'sepia':
       changeEffect.className = 'effects__preview  effects__preview--sepia';
       break;
-    case form.effect.value('marvin'):
+    case 'marvin':
       changeEffect.className = 'effects__preview  effects__preview--marvin';
       break;
-    case form.effect.value('phobos'):
+    case 'phobos':
       changeEffect.className = 'effects__preview  effects__preview--phobos';
       break;
-    case form.effect.value('heat'):
+    case 'heat':
       changeEffect.className = 'effects__preview  effects__preview--heat';
       break;
   }
