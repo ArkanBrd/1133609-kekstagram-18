@@ -3,22 +3,28 @@
 
 var ESC_KEYBUTTON = 27;
 
-var uploadFileOpen = document.getElementById('upload-file');
+// Поле для загрузки нового изображения на сайт
+var uploadField = document.querySelector('upload-select-image');
 
-var editImgUploadOpen = document.querySelector('.img-upload__overlay');
-var editImgUploadClose = uploadFileOpen.getElementById('upload-cancel');
+// Изначальное состояние поля для загрузки изображения
+var firstUploadFieldOpen = uploadField.querySelector('.upload-file');
 
-uploadFileOpen.addEventListener('click', function() {
-  editImgUploadOpen.classList.remove('hidden');
-  
-  document.addEventListener('keydown', function(evt) {
+// Форма редактирования изображения
+var editImgFormOpen = uploadField.querySelector('img-upload__overlay');
+
+// Закрытие формы редактирования изображения
+var editImgFormClose = editImgFormOpen.querySelector('upload-cancel');
+
+firstUploadFieldOpen.addEventListener('change', function () {
+  editImgFormOpen.classList.remove('hidden');
+
+  document.addEventListener('keydown', function (evt) {
     if (evt.keyCode === ESC_KEYBUTTON) {
-      editImgUploadOpen.classList.add('hidden');
+      editImgFormOpen.classList.add('hidden');
     }
   });
 });
 
-editImgUploadClose.addEventListener('click', function() {
-  editImgUploadOpen.classList.add('hidden');
+editImgFormClose.addEventListener('click', function () {
+  editImgFormClose.classList.add('hidden');
 });
-
