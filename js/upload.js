@@ -16,11 +16,10 @@ var editImgFormOpen = uploadField.querySelector('.img-upload__overlay');
 var editImgFormClose = editImgFormOpen.querySelector('#upload-cancel');
 
 // Смена эффекта изображения
-var effectList = document.querySelector('.effects__list');
-
-// Радио кнопки
-var effectRadio = effectList.querySelector('.effects__radio');
+var effectList = document.querySelectorAll('.effects__list');
 var effectForm = uploadField.querySelector('#upload-select-image');
+var effectRadio = document.querySelectorAll('.effects__item');
+var changedElement = null;
 
 //Изменение глубины эффекта, накладываемого на изображение
 var effectLevelPin = editImgFormOpen.querySelector('.effect-level__pin');
@@ -54,22 +53,22 @@ var onEditEffect = function () {
 var onDifEffects = function () {
   switch (effectForm.effect.value) {
     case 'chrome':
-      effectLevelValue.filter: grayscale(0..1);
+      imgUploadPreview.style.filter = 'grayscale(0.2)';
       break;
     case 'sepia':
-      effectLevelValue.filter: sepia(0..1);
+      imgUploadPreview.style.filter = 'sepia(0.2)';
       break;
     case 'marvin':
-      effectLevelValue.filter: invert(0..100%);
+      imgUploadPreview.style.filter = 'invert(20%)';
       break;
     case 'phobos':
-      effectLevelValue.filter: blur(0..3px);
+      imgUploadPreview.style.filter = 'blur(0.6px)';
       break;
     case 'heat':
-      effectLevelValue.filter: brightness(1..3);
+      imgUploadPreview.style.filter = 'brightness(1.4)';
       break;
     case 'none':
-      effectLevelValue.filter: remove;
+      imgUploadPreview.style.filter = nule;
       break;
   };
 };
@@ -89,7 +88,19 @@ editImgFormClose.addEventListener('click', function () {
   editImgFormOpen.classList.add('hidden');
 });
 
-effectRadio.addEventListener('click', onEditEffect);
+var changeHandler = function (evt) {
+  if (changedElement) {
+    changedElement.classlist.remove('change')
+  }
+  changedElement = evt.currentTarget;
+  changedElement.classList.add('change');
+};
+
+for (var i = 0; i < effectList.length; i++) {
+  effectList[i].addEventListener('change', changeHandler);
+}
+
+effectRadio.addEventListener('change', changeHandler);
 
 //Добавляем пин слайдера
 effectLevelPin.addEventListener('mouseup', );
