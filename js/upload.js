@@ -16,14 +16,13 @@ var editImgFormOpen = uploadField.querySelector('.img-upload__overlay');
 var editImgFormClose = editImgFormOpen.querySelector('#upload-cancel');
 
 // Смена эффекта изображения
-var effectList = document.querySelectorAll('.effects__list');
+var effectList = document.querySelector('.effects__list');
 var effectForm = uploadField.querySelector('#upload-select-image');
 var effectRadio = document.querySelectorAll('.effects__item');
 var changedElement = null;
 
-//Изменение глубины эффекта, накладываемого на изображение
-var effectLevelPin = editImgFormOpen.querySelector('.effect-level__pin');
-var effectLevelValue = editImgFormOpen.querySelector('.effect-level__value');
+// Изменение глубины эффекта, накладываемого на изображение
+var effectLevelLine = editImgFormOpen.querySelector('.effect-level__line');
 var imgUploadPreview = editImgFormOpen.querySelector('.img-upload__preview');
 
 // Функция определения эффекта
@@ -68,11 +67,11 @@ var onDifEffects = function () {
       imgUploadPreview.style.filter = 'brightness(1.4)';
       break;
     case 'none':
-      imgUploadPreview.style.filter = nule;
+      imgUploadPreview.style.filter = null;
       break;
-  };
+  }
 };
-//Открытие и закрытие через ESC формы редактирования
+// Открытие и закрытие через ESC формы редактирования
 firstUploadFieldOpen.addEventListener('change', function () {
   editImgFormOpen.classList.remove('hidden');
 
@@ -83,24 +82,23 @@ firstUploadFieldOpen.addEventListener('change', function () {
   });
 });
 
-//Закрытие формы редактирования
+// Закрытие формы редактирования
 editImgFormClose.addEventListener('click', function () {
   editImgFormOpen.classList.add('hidden');
 });
 
 var changeHandler = function (evt) {
   if (changedElement) {
-    changedElement.classlist.remove('change')
+    changedElement.classList.remove('change');
   }
-  changedElement = evt.currentTarget;
+  changedElement = evt.target;
   changedElement.classList.add('change');
 };
 
-for (var i = 0; i < effectList.length; i++) {
-  effectList[i].addEventListener('change', changeHandler);
+for (var i = 0; i < effectRadio.length; i++) {
+  effectRadio[i].addEventListener('change', onEditEffect);
+  effectRadio[i].addEventListener('change', changeHandler);
 }
 
-effectRadio.addEventListener('change', changeHandler);
-
-//Добавляем пин слайдера
-effectLevelPin.addEventListener('mouseup', );
+// Добавляем пин слайдера
+effectLevelLine.addEventListener('mouseup', onDifEffects);
