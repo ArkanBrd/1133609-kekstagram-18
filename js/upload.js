@@ -2,8 +2,6 @@
 'use strict';
 
 var ESC_KEYBUTTON = 27;
-var COORDINATE_LINE_X = (0.2);
-var COORDINATE_LINE_Y = 0;
 
 // Поле для загрузки нового изображения на сайт
 var uploadField = document.querySelector('#upload-select-image');
@@ -23,8 +21,7 @@ var effectRadio = document.querySelectorAll('.effects__item');
 var changedElement = null;
 
 // Изменение глубины эффекта, накладываемого на изображение
-var effectLevelLine = editImgFormOpen.querySelector('.effect-level__line');
-var effectLevelPin = effectLevelLine.querySelector('.effect-level__pin');
+var effectLevelPin = document.querySelector('.effect-level__pin');
 var imgUploadPreview = editImgFormOpen.querySelector('.img-upload__preview');
 
 // Функция определения эффекта
@@ -53,22 +50,23 @@ var onEditEffect = function () {
 
 var onDifEffects = function (evt) {
   var rect = effectLevelPin.getBoundingClientRect ();
-  if ((evt.rect.clientX === COORDINATE_LINE_X) && (evt.rect.clientY === COORDINATE_LINE_Y)) {
+  var COORD_X = (evt.clientX - rect.left) / rect.width;
+  if (COORD_X) {
     switch (uploadField.effect.value) {
       case 'chrome':
-        imgUploadPreview.style.filter = 'grayscale(0.2)';
+        imgUploadPreview.style.filter = 'grayscale(COORD_X)';
         break;
       case 'sepia':
-        imgUploadPreview.style.filter = 'sepia(0.2)';
+        imgUploadPreview.style.filter = 'sepia(COORD_X)';
         break;
       case 'marvin':
-        imgUploadPreview.style.filter = 'invert(20%)';
+        imgUploadPreview.style.filter = 'invert(COORD_X)';
         break;
       case 'phobos':
-        imgUploadPreview.style.filter = 'blur(0.6px)';
+        imgUploadPreview.style.filter = 'blur(COORD_X * 3)';
         break;
       case 'heat':
-        imgUploadPreview.style.filter = 'brightness(1.4)';
+        imgUploadPreview.style.filter = 'brightness(COORD_X * 2)';
         break;
       case 'none':
         imgUploadPreview.style.filter = null;
@@ -107,4 +105,4 @@ for (var i = 0; i < effectRadio.length; i++) {
 }
 
 // Добавляем пин слайдера
-effectLevelLine.addEventListener('mouseup', onDifEffects);
+effectLevelPin.addEventListener('mouseup', onDifEffects);
