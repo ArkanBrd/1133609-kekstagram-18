@@ -24,6 +24,7 @@ var changedElement = null;
 
 // Изменение глубины эффекта, накладываемого на изображение
 var effectLevelLine = editImgFormOpen.querySelector('.effect-level__line');
+var effectLevelPin = effectLevelLine.querySelector('.effect-level__pin');
 var imgUploadPreview = editImgFormOpen.querySelector('.img-upload__preview');
 
 // Функция определения эффекта
@@ -50,31 +51,30 @@ var onEditEffect = function () {
   }
 };
 
-var onDifEffects = function () {
-  effectLevelLine.getBoundingClientRect('click', function (evt) {
-    if ((evt.clientX === COORDINATE_LINE_X) && (evt.clientY === COORDINATE_LINE_Y)) {
-      switch (uploadField.effect.value) {
-        case 'chrome':
-          imgUploadPreview.style.filter = 'grayscale(0.2)';
-          break;
-        case 'sepia':
-          imgUploadPreview.style.filter = 'sepia(0.2)';
-          break;
-        case 'marvin':
-          imgUploadPreview.style.filter = 'invert(20%)';
-          break;
-        case 'phobos':
-          imgUploadPreview.style.filter = 'blur(0.6px)';
-          break;
-        case 'heat':
-          imgUploadPreview.style.filter = 'brightness(1.4)';
-          break;
-        case 'none':
-          imgUploadPreview.style.filter = null;
-          break;
-      }
+var onDifEffects = function (evt) {
+  var rect = effectLevelPin.getBoundingClientRect ();
+  if ((evt.rect.clientX === COORDINATE_LINE_X) && (evt.rect.clientY === COORDINATE_LINE_Y)) {
+    switch (uploadField.effect.value) {
+      case 'chrome':
+        imgUploadPreview.style.filter = 'grayscale(0.2)';
+        break;
+      case 'sepia':
+        imgUploadPreview.style.filter = 'sepia(0.2)';
+        break;
+      case 'marvin':
+        imgUploadPreview.style.filter = 'invert(20%)';
+        break;
+      case 'phobos':
+        imgUploadPreview.style.filter = 'blur(0.6px)';
+        break;
+      case 'heat':
+        imgUploadPreview.style.filter = 'brightness(1.4)';
+        break;
+      case 'none':
+        imgUploadPreview.style.filter = null;
+        break;
     }
-  });
+  }
 };
 
 // Открытие и закрытие через ESC формы редактирования
