@@ -2,6 +2,8 @@
 'use strict';
 
 var ESC_KEYBUTTON = 27;
+var COORDINATE_LINE_X = (0.2);
+var COORDINATE_LINE_Y = 0;
 
 // Поле для загрузки нового изображения на сайт
 var uploadField = document.querySelector('#upload-select-image');
@@ -17,7 +19,6 @@ var editImgFormClose = editImgFormOpen.querySelector('#upload-cancel');
 
 // Смена эффекта изображения
 var effectList = document.querySelector('.effects__list');
-var effectForm = uploadField.querySelector('#upload-select-image');
 var effectRadio = document.querySelectorAll('.effects__item');
 var changedElement = null;
 
@@ -27,7 +28,7 @@ var imgUploadPreview = editImgFormOpen.querySelector('.img-upload__preview');
 
 // Функция определения эффекта
 var onEditEffect = function () {
-  switch (effectForm.effect.value) {
+  switch (uploadField.effect.value) {
     case 'chrome':
       effectList.className = 'effects__preview  effects__preview--chrome';
       break;
@@ -50,27 +51,32 @@ var onEditEffect = function () {
 };
 
 var onDifEffects = function () {
-  switch (effectForm.effect.value) {
-    case 'chrome':
-      imgUploadPreview.style.filter = 'grayscale(0.2)';
-      break;
-    case 'sepia':
-      imgUploadPreview.style.filter = 'sepia(0.2)';
-      break;
-    case 'marvin':
-      imgUploadPreview.style.filter = 'invert(20%)';
-      break;
-    case 'phobos':
-      imgUploadPreview.style.filter = 'blur(0.6px)';
-      break;
-    case 'heat':
-      imgUploadPreview.style.filter = 'brightness(1.4)';
-      break;
-    case 'none':
-      imgUploadPreview.style.filter = null;
-      break;
-  }
+  effectLevelLine.getBoundingClientRect('click', function (evt) {
+    if ((evt.clientX === COORDINATE_LINE_X) && (evt.clientY === COORDINATE_LINE_Y)) {
+      switch (uploadField.effect.value) {
+        case 'chrome':
+          imgUploadPreview.style.filter = 'grayscale(0.2)';
+          break;
+        case 'sepia':
+          imgUploadPreview.style.filter = 'sepia(0.2)';
+          break;
+        case 'marvin':
+          imgUploadPreview.style.filter = 'invert(20%)';
+          break;
+        case 'phobos':
+          imgUploadPreview.style.filter = 'blur(0.6px)';
+          break;
+        case 'heat':
+          imgUploadPreview.style.filter = 'brightness(1.4)';
+          break;
+        case 'none':
+          imgUploadPreview.style.filter = null;
+          break;
+      }
+    }
+  });
 };
+
 // Открытие и закрытие через ESC формы редактирования
 firstUploadFieldOpen.addEventListener('change', function () {
   editImgFormOpen.classList.remove('hidden');
