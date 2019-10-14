@@ -21,32 +21,9 @@ var effectRadio = document.querySelectorAll('.effects__item');
 var changedElement = null;
 
 // Изменение глубины эффекта, накладываемого на изображение
+var effectLevelLine = document.querySelector('.effect-level__line');
 var effectLevelPin = document.querySelector('.effect-level__pin');
 var imgUploadPreview = editImgFormOpen.querySelector('.img-upload__preview');
-
-// Функция определения эффекта
-var onEditEffect = function () {
-  switch (uploadField.effect.value) {
-    case 'chrome':
-      effectList.className = 'effects__preview  effects__preview--chrome';
-      break;
-    case 'sepia':
-      effectList.className = 'effects__preview  effects__preview--sepia';
-      break;
-    case 'marvin':
-      effectList.className = 'effects__preview  effects__preview--marvin';
-      break;
-    case 'phobos':
-      effectList.className = 'effects__preview  effects__preview--phobos';
-      break;
-    case 'heat':
-      effectList.className = 'effects__preview  effects__preview--heat';
-      break;
-    case 'none':
-      effectList.className = 'effects__preview  effects__preview--none';
-      break;
-  }
-};
 
 var onDifEffects = function (evt) {
   var rect = effectLevelPin.getBoundingClientRect ();
@@ -54,22 +31,23 @@ var onDifEffects = function (evt) {
   if (COORD_X) {
     switch (uploadField.effect.value) {
       case 'chrome':
-        imgUploadPreview.style.filter = 'grayscale(COORD_X)';
+        imgUploadPreview.style.filter = 'grayscale(' + COORD_X + ')';
         break;
       case 'sepia':
-        imgUploadPreview.style.filter = 'sepia(COORD_X)';
+        imgUploadPreview.style.filter = 'sepia(' + COORD_X + ')';
         break;
       case 'marvin':
-        imgUploadPreview.style.filter = 'invert(COORD_X)';
+        imgUploadPreview.style.filter = 'invert(' + COORD_X * + ')';
         break;
       case 'phobos':
-        imgUploadPreview.style.filter = 'blur(COORD_X * 3)';
+        imgUploadPreview.style.filter = 'blur(' + COORD_X * 3 + 'px)';
         break;
       case 'heat':
-        imgUploadPreview.style.filter = 'brightness(COORD_X * 2)';
+        imgUploadPreview.style.filter = 'brightness(' + COORD_X * 2 + ')';
         break;
       case 'none':
         imgUploadPreview.style.filter = null;
+        effectLevelLine.classList.add('invisible');
         break;
     }
   }
@@ -100,9 +78,8 @@ var changeHandler = function (evt) {
 };
 
 for (var i = 0; i < effectRadio.length; i++) {
-  effectRadio[i].addEventListener('change', onEditEffect);
   effectRadio[i].addEventListener('change', changeHandler);
 }
 
 // Добавляем пин слайдера
-effectLevelPin.addEventListener('mouseup', onDifEffects);
+effectLevelLine.addEventListener('mouseup', onDifEffects);
