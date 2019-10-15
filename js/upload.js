@@ -23,33 +23,37 @@ var changedElement = null;
 // Изменение глубины эффекта, накладываемого на изображение
 var effectLevelLine = document.querySelector('.effect-level__line');
 var effectLevelPin = document.querySelector('.effect-level__pin');
+var effectLevelDepth = effectLevelLine.querySelector('.effect-level__depth');
 var imgUploadPreview = editImgFormOpen.querySelector('.img-upload__preview');
 
 var onDifEffects = function (evt) {
-  var rect = effectLevelPin.getBoundingClientRect ();
-  var COORD_X = (evt.clientX - rect.left) / rect.width;
-  if (COORD_X) {
+  var rectLine = effectLevelLine.getBoundingClientRect ();
+  var coordinateX = (evt.clientX - rectLine.left) / rectLine.width;
+
+  if (coordinateX) {
     switch (uploadField.effect.value) {
       case 'chrome':
-        imgUploadPreview.style.filter = 'grayscale(' + COORD_X + ')';
+        imgUploadPreview.style.filter = 'grayscale(' + coordinateX + ')';
         break;
       case 'sepia':
-        imgUploadPreview.style.filter = 'sepia(' + COORD_X + ')';
+        imgUploadPreview.style.filter = 'sepia(' + coordinateX + ')';
         break;
       case 'marvin':
-        imgUploadPreview.style.filter = 'invert(' + COORD_X * + ')';
+        imgUploadPreview.style.filter = 'invert(' + coordinateX * 100 + ')';
         break;
       case 'phobos':
-        imgUploadPreview.style.filter = 'blur(' + COORD_X * 3 + 'px)';
+        imgUploadPreview.style.filter = 'blur(' + coordinateX * 3 + 'px)';
         break;
       case 'heat':
-        imgUploadPreview.style.filter = 'brightness(' + COORD_X * 2 + ')';
+        imgUploadPreview.style.filter = 'brightness(' + coordinateX * 2 + ')';
         break;
       case 'none':
         imgUploadPreview.style.filter = null;
         effectLevelLine.classList.add('invisible');
         break;
     }
+    effectLevelPin.style.left = coordinateX * 100;
+	effectLevelDepth.style.width = coordinateX * 100;
   }
 };
 
