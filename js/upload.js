@@ -21,7 +21,6 @@ var buttonPlus = document.querySelector('.scale__control--bigger');
 var scaleControl = document.querySelector('.scale__control--value');
 
 // Смена эффекта изображения
-var effectList = document.querySelector('.effects__list');
 var effectRadio = document.querySelectorAll('.effects__item');
 var changedElement = null;
 var imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
@@ -32,7 +31,6 @@ var effectLevelPin = document.querySelector('.effect-level__pin');
 var effectLevelDepth = effectLevelLine.querySelector('.effect-level__depth');
 var imgUploadPreview = editImgFormOpen.querySelector('.img-upload__preview');
 
-var currentEffect = 'none';
 var swapFilters = function (effect, depth) {
   if (effect === 'none') {
     imgUploadEffectLevel.classList.add('hidden');
@@ -65,7 +63,7 @@ var swapFilters = function (effect, depth) {
 };
 
 var onDifEffects = function (evt) {
-  var rectLine = effectLevelLine.getBoundingClientRect ();
+  var rectLine = effectLevelLine.getBoundingClientRect();
   var coordinateX = (evt.clientX - rectLine.left) / rectLine.width;
 
   swapFilters(uploadForm.effect.value, coordinateX);
@@ -77,7 +75,7 @@ firstuploadFormOpen.addEventListener('change', function () {
   swapFilters(uploadForm.effect.value, 1);
 
   document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ESC_KEYBUTTON) {
+    if (evt.keyCode === ESC_KEYBUTTON && document.activeElement !== uploadForm.hashtags) {
       editImgFormOpen.classList.add('hidden');
     }
   });
@@ -106,19 +104,23 @@ for (var i = 0; i < effectRadio.length; i++) {
 effectLevelLine.addEventListener('mouseup', onDifEffects);
 
 // Функция нажатия на "-" и "+"
-var scaleDefault = 1;
-var stepScale = 0.25;
+var SCALEDEFAULT = 1;
+var STEPSCALE = 0.25;
+var currentScale = SCALEDEFAULT;
 var onButtonMinusClick = function () {
-  scaleControl.scale = scaleDefault;
-  if (buttonMinus) {
-    scaleControl.scale = scaleControl.scale - stepScale;
+  if (currentScale > 0.25) {
+    currentScale = currentScale - STEPSCALE;
+    scaleControl.value = currentScale * 100 + '%';
+    imgUploadPreview.style.transform = 'scale(' + currentScale + ')';
   }
 };
 
 var onButtonPlusClick = function () {
-  scaleControl.scale = scaleDefault;
-  if (buttonMinus) {
-    scaleControl.scale = scaleControl.scale + stepScale;
+  scaleControl.scale = SCALEDEFAULT;
+  if (currentScale < 1) {
+    currentScale = currentScale + STEPSCALE;
+    scaleControl.value = currentScale * 100 + '%';
+    imgUploadPreview.style.transform = 'scale(' + currentScale + ')';
   }
 };
 
@@ -127,32 +129,37 @@ buttonMinus.addEventListener('click', onButtonMinusClick);
 buttonPlus.addEventListener('click', onButtonPlusClick);
 
 // Выполняем валидацию
-var handlerUplodForm = function (evt) {
-  evt.preventDefault();
+var handlerUplodForm = function () {
   var hashtags = uploadForm.hashtags.value;
-  var words = hashtags.split(' ');
+  var words = hashtags.split(/ +/);
+  var wordsMap = {};
+  if (words.length > 5) {
+    uploadForm.hashtags.setCustomValidity('нельзя указать больше пяти хэш-тегов');
+  }
   for (var j = 0; j < words.length; j++) {
     if (words[j][0] !== '#') {
-      uploadForm.hashtags.setCustomValidity ('хэш-тег начинается с символа # (решётка)');
-      break;
+      uploadForm.hashtags.setCustomValidity('хэш-тег начинается с символа # (решётка)');
+      return;
     }
-    if (words[i] === '#') {
-      uploadForm.hashtags.setCustomValidity ('хеш-тег не может состоять только из одной решётки');
-      break;
+    if (words[j] === '#') {
+      uploadForm.hashtags.setCustomValidity('хеш-тег не может состоять только из одной решётки');
+      return;
     }
-    if (words[i] !== words[i]) {
-      uploadForm.hashtags.setCustomValidity ('один и тот же хэш-тег не может быть использован дважды');
-      break;
+    if (words[j].length > 20) {
+      uploadForm.hashtags.setCustomValidity('максимальная длина одного хэш-тега 20 символов, включая решётку');
+      return;
     }
-    if (words[i] > 5) {
-      uploadForm.hashtags.setCustomValidity ('нельзя указать больше пяти хэш-тегов');
-      break;
+    if (words[j].indexOf('#', 1) >= 0) {
+      uploadForm.hashtags.setCustomValidity('хэш-теги разделяются пробелами');
+      return;
     }
-    if (words[i].length > 20) {
-      uploadForm.hashtags.setCustomValidity ('максимальная длина одного хэш-тега 20 символов, включая решётку');
-      break;
+    if (wordsMap.hasOwnProperty(words[j].toLowerCase())) {
+      uploadForm.hashtags.setCustomValidity('теги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом');
+      return;
     }
+    wordsMap[words[j].toLowerCase()] = true;
   }
+  uploadForm.hashtags.setCustomValidity('');
 };
 
-uploadForm.addEventListener('submit', handlerUplodForm);
+uploadForm.hashtags.addEventListener('change', handlerUplodForm);
