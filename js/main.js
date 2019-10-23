@@ -46,8 +46,9 @@ var generatePhotoDescriptions = function () {
 };
 
 var pictures = generatePhotoDescriptions();
-var renderPicture = function (picture) {
+var renderPicture = function (picture, index) {
   var pictureElement = uploadPhotoTemplate.content.cloneNode(true);
+  pictureElement.querySelector('a.picture').dataset['index'] = index;
 
   pictureElement.querySelector('.picture__img').src = picture.url;
   pictureElement.querySelector('.picture__likes').textContent = picture.likes;
@@ -58,7 +59,44 @@ var renderPicture = function (picture) {
 
 var fragment = document.createDocumentFragment();
 for (var i = 0; i < pictures.length; i++) {
-  fragment.appendChild(renderPicture(pictures[i]));
+  fragment.appendChild(renderPicture(pictures[i], i));
 }
 uploadPhotoElement.appendChild(fragment);
 
+// Больше деталий
+
+// Полноэкранный режим
+var picturesContainerImg = document.querySelector('.pictures.container');
+var bigPicture = document.querySelector('.big-picture');
+var bigPictureImg = document.querySelector('.big-picture__img img');
+var pictureCancel = document.querySelector('#picture-cancel');
+var bigPictureSocial = document.querySelector('.big-picture__social');
+
+var likesCount = bigPictureSocial.likes-count;
+var commentsCount = bigPictureSocial.comments-count;
+var socialComments = bigPictureSocial.social__comments;
+
+var handlerBigPicture = function () {
+  likesCount.textContent = pictures[index].likes;
+  commentsCount.textContent = pictures[index].comments.length;
+  socialComments = picture[index].comments
+};
+picturesContainerImg.addEventListener('click', function (evt) {
+  var aPicture = evt.target.closest('a.picture');
+  if (aPicture !== null) {
+  bigPicture.classList.remove('hidden');
+  evt.preventDefault();
+  var index = evt.target.closest('a.picture').dataset['index']
+  bigPictureImg.src = pictures[index].url;
+  }
+})
+
+pictureCancel.addEventListener('click', function () {
+  bigPicture.classList.add('hidden') 
+})
+
+document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ESC_KEYBUTTON) {
+  bigPicture.classList.add('hidden')
+  }
+})

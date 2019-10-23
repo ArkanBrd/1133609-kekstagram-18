@@ -78,7 +78,7 @@ firstuploadFormOpen.addEventListener('change', function () {
   scaleControl.value = SCALEDEFAULT * 100 + '%';
 
   document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ESC_KEYBUTTON && document.activeElement !== uploadForm.hashtags) {
+    if (evt.keyCode === ESC_KEYBUTTON && document.activeElement !== uploadForm.hashtags && document.activeElement !== uploadForm.description) {
       editImgFormOpen.classList.add('hidden');
     }
   });
@@ -163,26 +163,13 @@ var handlerUplodForm = function () {
   uploadForm.hashtags.setCustomValidity('');
 };
 
+var handlerDescriptionUplodForm = function () {
+  var textDescription = uploadForm.description.value;
+  if (textDescription.length > 140) {
+    uploadForm.description.setCustomValidity('длина комментария не может составлять больше 140 символов');
+    return;
+  }
+};
 uploadForm.hashtags.addEventListener('change', handlerUplodForm);
 
-// Полноэкранный режим
-var picturesContainerImg = document.querySelector('.pictures.container');
-var bigPicture = document.querySelector('.big-picture');
-var bigPictureImg = document.querySelector('.big-picture__img');
-var pictureCancel = document.querySelector('#picture-cancel');
-
-picturesContainerImg.addEventListener('click', function (evt) {
-  bigPicture.classList.remove('hidden');
-  evt.preventDefault();
-  evt.target()
-})
-
-pictureCancel.addEventListener('click', function () {
-  bigPicture.classList.add('hidden') 
-})
-
-document.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ESC_KEYBUTTON) {
-  bigPicture.classList.add('hidden')
-  }
-})
+uploadForm.description.addEventListener('change', handlerDescriptionUplodForm);
