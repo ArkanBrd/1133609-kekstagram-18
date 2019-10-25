@@ -43,6 +43,7 @@ var swapFilters = function (effect, depth) {
   switch (effect) {
     case 'chrome':
       imgUploadPreview.style.filter = 'grayscale(' + depth + ')';
+	  imgUploadPreview.classList.add('effect');
       break;
     case 'sepia':
       imgUploadPreview.style.filter = 'sepia(' + depth + ')';
@@ -51,7 +52,7 @@ var swapFilters = function (effect, depth) {
       imgUploadPreview.style.filter = 'invert(' + depth * 100 + '%)';
       break;
     case 'phobos':
-      imgUploadPreview.style.filter = 'blur(' + depth * 3 + 'px)';
+      imgUploadPreview.style.filter = 'blur(' + (depth * 2) + 1 + 'px)';
       break;
     case 'heat':
       imgUploadPreview.style.filter = 'brightness(' + depth * 2 + ')';
@@ -67,29 +68,42 @@ var swapFilters = function (effect, depth) {
 var onDifEffects = function (evt) {
   var rectLine = effectLevelLine.getBoundingClientRect();
   var coordinateX = (evt.clientX - rectLine.left) / rectLine.width;
-
+  if (coordinateX < 0) {
+    coordinateX = 0;
+  }
+  if (coordinateX > 1) {
+    coordinateX = 1;
+  }
   swapFilters(uploadForm.effect.value, coordinateX);
 };
 
-// Открытие и закрытие через ESC формы редактирования
-firstuploadFormOpen.addEventListener('change', function () {
+var uploadOpen = function () {
   editImgFormOpen.classList.remove('hidden');
+}; 
+var uploadFormOpen = function () {
+  uploadOpen();
   swapFilters(uploadForm.effect.value, 1);
   scaleControl.value = SCALEDEFAULT * 100 + '%';
 
   document.addEventListener('keydown', function (evt) {
     if (evt.keyCode === ESC_KEYBUTTON && document.activeElement !== uploadForm.hashtags && document.activeElement !== uploadForm.description) {
-      editImgFormOpen.classList.add('hidden');
+      uploadCancel();
     }
   });
-});
+};
 
-// Закрытие формы редактирования
-editImgFormClose.addEventListener('click', function () {
+// Открытие и закрытие через ESC формы редактирования
+firstuploadFormOpen.addEventListener('change', uploadFormOpen);
+firstuploadFormOpen.removeEventListener('change', uploadFormOpen);
+
+var uploadCancel = function () {
   editImgFormOpen.classList.add('hidden');
-});
+};
+// Закрытие формы редактирования
+editImgFormClose.addEventListener('click', uploadCancel);
+editImgFormClose.removeEventListener('click', uploadCancel);
 
-var changeHandler = function (evt) {
+var changeHandlerEffect = function (evt) {
   if (changedElement) {
     changedElement.classList.remove('change');
   }
@@ -99,9 +113,8 @@ var changeHandler = function (evt) {
   swapFilters(uploadForm.effect.value, 1);
 };
 
-for (var i = 0; i < effectRadio.length; i++) {
-  effectRadio[i].addEventListener('change', changeHandler);
-}
+var effectList = document.querySelector('.effects__list');
+effectList.addEventListener('change', changeHandlerEffect);
 
 // Добавляем пин слайдера
 effectLevelLine.addEventListener('mouseup', onDifEffects);
