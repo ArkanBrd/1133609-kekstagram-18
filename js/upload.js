@@ -43,19 +43,23 @@ var swapFilters = function (effect, depth) {
   switch (effect) {
     case 'chrome':
       imgUploadPreview.style.filter = 'grayscale(' + depth + ')';
-	  imgUploadPreview.classList.add('effect');
+	  imgUploadPreview.classList.add('effect__preview--chrome');
       break;
     case 'sepia':
       imgUploadPreview.style.filter = 'sepia(' + depth + ')';
+	    imgUploadPreview.classList.add('effect__preview--sepia');
       break;
     case 'marvin':
       imgUploadPreview.style.filter = 'invert(' + depth * 100 + '%)';
+	    imgUploadPreview.classList.add('effect__preview--marvin');
       break;
     case 'phobos':
       imgUploadPreview.style.filter = 'blur(' + (depth * 2) + 1 + 'px)';
+	    imgUploadPreview.classList.add('effect__preview--phobos');
       break;
     case 'heat':
       imgUploadPreview.style.filter = 'brightness(' + depth * 2 + ')';
+	    imgUploadPreview.classList.add('effect__preview--heat');
       break;
     case 'none':
       imgUploadPreview.style.filter = null;
