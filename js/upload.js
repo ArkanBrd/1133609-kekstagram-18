@@ -189,3 +189,4 @@ var handlerDescriptionUplodForm = function () {
 uploadForm.hashtags.addEventListener('change', handlerUplodForm);
 
 uploadForm.description.addEventListener('change', handlerDescriptionUplodForm);
+
