@@ -23,7 +23,6 @@ var buttonPlus = document.querySelector('.scale__control--bigger');
 var scaleControl = document.querySelector('.scale__control--value');
 
 // Смена эффекта изображения
-var effectRadio = document.querySelectorAll('.effects__item');
 var changedElement = null;
 var imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
 
@@ -43,23 +42,23 @@ var swapFilters = function (effect, depth) {
   switch (effect) {
     case 'chrome':
       imgUploadPreview.style.filter = 'grayscale(' + depth + ')';
-	  imgUploadPreview.classList.add('effect__preview--chrome');
+      imgUploadPreview.classList.add('effect__preview--chrome');
       break;
     case 'sepia':
       imgUploadPreview.style.filter = 'sepia(' + depth + ')';
-	    imgUploadPreview.classList.add('effect__preview--sepia');
+      imgUploadPreview.classList.add('effect__preview--sepia');
       break;
     case 'marvin':
       imgUploadPreview.style.filter = 'invert(' + depth * 100 + '%)';
-	    imgUploadPreview.classList.add('effect__preview--marvin');
+      imgUploadPreview.classList.add('effect__preview--marvin');
       break;
     case 'phobos':
       imgUploadPreview.style.filter = 'blur(' + (depth * 2) + 1 + 'px)';
-	    imgUploadPreview.classList.add('effect__preview--phobos');
+      imgUploadPreview.classList.add('effect__preview--phobos');
       break;
     case 'heat':
       imgUploadPreview.style.filter = 'brightness(' + depth * 2 + ')';
-	    imgUploadPreview.classList.add('effect__preview--heat');
+      imgUploadPreview.classList.add('effect__preview--heat');
       break;
     case 'none':
       imgUploadPreview.style.filter = null;
@@ -83,7 +82,7 @@ var onDifEffects = function (evt) {
 
 var uploadOpen = function () {
   editImgFormOpen.classList.remove('hidden');
-}; 
+};
 var uploadFormOpen = function () {
   uploadOpen();
   swapFilters(uploadForm.effect.value, 1);
