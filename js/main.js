@@ -1,10 +1,10 @@
 // Файл main.js
 'use strict';
 
+// Файл data.js
+
 var ESC_KEYBUTTON = 27;
-var getRandomLike = function (min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
+
 
 var FLOODS = ['Всё отлично!', 'В целом всё неплохо. Но не всё.', 'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.', 'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.', 'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.', 'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
 
@@ -12,6 +12,8 @@ var GUYS = ['Гуша', 'Курепа', 'МКС', 'Коняк', 'Аркан', '�
 
 var uploadPhotoElement = document.querySelector('.pictures');
 var uploadPhotoTemplate = document.querySelector('#picture');
+
+// Файл gallery.js
 
 var getRandomName = function () {
   return GUYS[Math.floor(Math.random() * GUYS.length)];
@@ -45,6 +47,7 @@ var generatePhotoDescriptions = function () {
   }
   return photos;
 };
+// Файл picture.js
 
 var pictures = generatePhotoDescriptions();
 var renderPicture = function (picture, index) {
@@ -64,7 +67,7 @@ for (var i = 0; i < pictures.length; i++) {
 }
 uploadPhotoElement.appendChild(fragment);
 
-// Больше деталий
+// Файл data.js
 
 // Полноэкранный режим
 var picturesContainerImg = document.querySelector('.pictures.container');
@@ -79,6 +82,8 @@ var socialComments = bigPictureSocial.querySelector('.social__comments');
 var socialCaption = bigPictureSocial.querySelector('.social__caption');
 var socialCommentCount = bigPictureSocial.querySelector('.social__comment-count');
 var commentsLoader = bigPictureSocial.querySelector('.comments-loader');
+
+// Файл preview.js
 
 var renderComment = function (coment) {
   var temp = document.createElement('template');
