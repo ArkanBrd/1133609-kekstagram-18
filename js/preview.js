@@ -57,7 +57,7 @@
 
   document.addEventListener('keydown', function (evt) {
     window.util.isEscEvent(evt, function () {
-  	   bigPicture.classList.add('hidden');
+      bigPicture.classList.add('hidden');
     });
   });
 })();
