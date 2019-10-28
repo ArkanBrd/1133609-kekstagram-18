@@ -4,7 +4,6 @@
 (function () {
   var SCALEDEFAULT = 1;
   var STEPSCALE = 0.25;
-  var ESC_KEYBUTTON = 27;
 
   // Поле для загрузки нового изображения на сайт
   var uploadForm = document.querySelector('#upload-select-image');
@@ -82,10 +81,13 @@
   };
 
   var uploadEscClose = function (evt) {
-    if (evt.keyCode === ESC_KEYBUTTON && document.activeElement !== uploadForm.hashtags && document.activeElement !== uploadForm.description) {
-      uploadCancel();
-    }
+    window.util.isEscEvent(evt, function () {
+      if (document.activeElement !== uploadForm.hashtags && document.activeElement !== uploadForm.description) {
+        uploadCancel();
+      }
+    });
   };
+
   var uploadOpen = function () {
     editImgFormOpen.classList.remove('hidden');
   };
