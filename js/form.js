@@ -68,6 +68,20 @@
     effectLevelDepth.style.width = depth * 100 + '%';
   };
 
+  var closeMouseClick = function () {
+    document.removeEventListener('mousemove', onDifEffects);
+    document.removeEventListener('mouseup', closeMouseClick);
+
+  };
+  effectLevelPin.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+
+    document.addEventListener('mousemove', onDifEffects);
+    document.addEventListener('mouseup', closeMouseClick);
+
+  });
+
+
   var onDifEffects = function (evt) {
     var rectLine = effectLevelLine.getBoundingClientRect();
     var coordinateX = (evt.clientX - rectLine.left) / rectLine.width;
@@ -79,6 +93,7 @@
     }
     swapFilters(uploadForm.effect.value, coordinateX);
   };
+  effectLevelLine.addEventListener('mouseup', onDifEffects);
 
   var uploadEscClose = function (evt) {
     window.util.isEscEvent(evt, function () {
@@ -124,9 +139,6 @@
 
   var effectList = document.querySelector('.effects__list');
   effectList.addEventListener('change', changeHandlerEffect);
-
-  // Добавляем пин слайдера
-  effectLevelLine.addEventListener('mouseup', onDifEffects);
 
   // Функция нажатия на "-" и "+"
   var currentScale = SCALEDEFAULT;
