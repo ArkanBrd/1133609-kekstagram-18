@@ -70,18 +70,18 @@
 
   var closeMouseClick = function () {
     document.removeEventListener('mousemove', onDifEffects);
-	document.removeEventListener('mouseup', closeMouseClick);
-	
+    document.removeEventListener('mouseup', closeMouseClick);
+
   };
   effectLevelPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
-  
+
     document.addEventListener('mousemove', onDifEffects);
     document.addEventListener('mouseup', closeMouseClick);
 
   });
 
-  
+
   var onDifEffects = function (evt) {
     var rectLine = effectLevelLine.getBoundingClientRect();
     var coordinateX = (evt.clientX - rectLine.left) / rectLine.width;
@@ -139,8 +139,6 @@
 
   var effectList = document.querySelector('.effects__list');
   effectList.addEventListener('change', changeHandlerEffect);
-
- 
 
   // Функция нажатия на "-" и "+"
   var currentScale = SCALEDEFAULT;
