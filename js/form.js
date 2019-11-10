@@ -118,9 +118,6 @@
     }
   };
 
-  // Открытие и закрытие через ESC формы редактирования
-
-
   var uploadCancel = function () {
     editImgFormOpen.classList.add('hidden');
     editImgFormClose.removeEventListener('click', uploadCancel);
@@ -208,4 +205,18 @@
 
   uploadForm.description.addEventListener('change', handlerDescriptionUplodForm);
 
+  
+  
+  var onError = function (error) {
+    window.popup.errorShow(error);
+	uploadCancel();
+  };
+  var onSuccess = function () {
+    	  
+  };
+
+  uploadForm.addEventListener('submit', function (evt) {
+    window.upload.uploadPost(new FormData(uploadForm), onSuccess,onError);
+    evt.preventDefault();
+  })
 })();
