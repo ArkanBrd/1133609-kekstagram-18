@@ -3,12 +3,12 @@
 
 (function () {
   var URL = 'https://js.dump.academy/kekstagram';
-  
+
   window.upload = {
     loadPhoto: function (onSuccess, onError) {
       var xhr = new XMLHttpRequest();
-	  xhr.responseType = 'json';
-	  
+      xhr.responseType = 'json';
+
       xhr.addEventListener('load', function () {
         var error;
         switch (xhr.status) {
@@ -42,11 +42,11 @@
     },
 
     uploadPost: function (data, onSuccess, onError) {
-	  var xhr = new XMLHttpRequest();
-	  xhr.responseType = 'json';
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = 'json';
 
       xhr.addEventListener('load', function () {
-		var error;
+        var error;
         switch (xhr.status) {
           case 200:
             onSuccess(xhr.response);
@@ -69,7 +69,7 @@
         }
       });
       xhr.open('POST', URL);
-	  xhr.send(data);
+      xhr.send(data);
     }
   };
 

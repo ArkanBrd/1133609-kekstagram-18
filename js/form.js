@@ -16,7 +16,7 @@
 
   // Закрытие формы редактирования изображения
   var editImgFormClose = editImgFormOpen.querySelector('#upload-cancel');
-
+  var textDiscription = document.querySelector('.text__description');
   // Изменение масштаба
   var buttonMinus = document.querySelector('.scale__control--smaller');
   var buttonPlus = document.querySelector('.scale__control--bigger');
@@ -122,6 +122,12 @@
     editImgFormOpen.classList.add('hidden');
     editImgFormClose.removeEventListener('click', uploadCancel);
     document.removeEventListener('keydown', uploadEscClose);
+    currentScale = SCALEDEFAULT;
+    uploadForm.hashtags.value = '';
+    uploadForm.effect.value = 'none';
+    swapFilters('none', 1);
+    imgUploadPreview.style.transform = 'scale(1)';
+    textDiscription.value = '';
   };
 
   var changeHandlerEffect = function (evt) {
@@ -205,18 +211,18 @@
 
   uploadForm.description.addEventListener('change', handlerDescriptionUplodForm);
 
-  
-  
+
   var onError = function (error) {
     window.popup.errorShow(error);
-	uploadCancel();
+    uploadCancel();
   };
   var onSuccess = function () {
-    	  
+    window.popup.successShow();
+    uploadCancel();
   };
 
   uploadForm.addEventListener('submit', function (evt) {
-    window.upload.uploadPost(new FormData(uploadForm), onSuccess,onError);
+    window.upload.uploadPost(new FormData(uploadForm), onSuccess, onError);
     evt.preventDefault();
-  })
+  });
 })();
