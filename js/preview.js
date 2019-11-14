@@ -35,17 +35,17 @@
 
   var someComments = 0;
   var currentPicture = null;
-  
+
   var commentsLoader = function () {
     var fragmentComent = document.createDocumentFragment();
-	var j;
+    var j;
     for (j = someComments; j < (someComments + 5) && j < currentPicture.comments.length; j++) {
       fragmentComent.appendChild(renderComment(currentPicture.comments[j]));
     }
     socialComments.appendChild(fragmentComent);
     if (j === currentPicture.comments.length) {
       buttonCommentsLoader.classList.add('visually-hidden');
-	};
+    }
     someComments = someComments + 5;
   };
   buttonCommentsLoader.addEventListener('click', commentsLoader);
@@ -59,8 +59,8 @@
       socialComments.innerHTML = '';
       socialCaption.textContent = picture.description;
       socialCommentCount.classList.add('visually-hidden');
-	  buttonCommentsLoader.classList.remove('visually-hidden');
-	  someComments = 0;
+      buttonCommentsLoader.classList.remove('visually-hidden');
+      someComments = 0;
       commentsLoader();
     }
   };
