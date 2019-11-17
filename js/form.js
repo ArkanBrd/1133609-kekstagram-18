@@ -135,7 +135,7 @@
     swapFilters('none', 1);
     imgUploadPreview.style.transform = 'scale(1)';
     textDiscription.value = '';
-	imgUpload.value = '';
+    imgUpload.value = '';
   };
 
   var changeHandlerEffect = function (evt) {

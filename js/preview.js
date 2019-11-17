@@ -61,7 +61,8 @@
       socialCommentCount.classList.add('visually-hidden');
       buttonuploadComments.classList.remove('visually-hidden');
       someComments = 0;
-      uploadComments();
+      pictureCancel.addEventListener('click', closeBigPicture);
+      document.addEventListener('keydown', pressEsc);
     }
   };
 
@@ -77,7 +78,7 @@
   var pressEsc = function (evt) {
     window.util.isEscEvent(evt, function () {
       bigPicture.classList.add('hidden');
-	  cancelEventBigPicture();
+      cancelEventBigPicture();
     });
   };
   document.addEventListener('keydown', pressEsc);
