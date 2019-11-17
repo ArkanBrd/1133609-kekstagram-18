@@ -74,7 +74,6 @@
   var closeBigPicture = function () {
     bigPicture.classList.add('hidden');
   };
-  pictureCancel.addEventListener('click', closeBigPicture);
 
   var pressEsc = function (evt) {
     window.util.isEscEvent(evt, function () {
@@ -82,5 +81,5 @@
       cancelEventBigPicture();
     });
   };
-  document.addEventListener('keydown', pressEsc);
+
 })();
