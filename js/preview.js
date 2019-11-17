@@ -63,6 +63,7 @@
       someComments = 0;
       pictureCancel.addEventListener('click', closeBigPicture);
       document.addEventListener('keydown', pressEsc);
+	  uploadComments();
     }
   };
 
