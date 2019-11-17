@@ -51,50 +51,50 @@
     },
   };
 
-  var forButton = function (argument) {
+  var pressButton = function (argument) {
     var classPicture = uploadPhotoElement.querySelectorAll('.picture');
     for (var j = 0; j < classPicture.length; j++) {
       uploadPhotoElement.removeChild(classPicture[j]);
     }
     buttonFilter[filterName].element.classList.remove('img-filters__button--active');
-    var newPicture = buttonFilter[argument].method();
+    var createNewPicture = buttonFilter[argument].method();
     filterName = argument;
     buttonFilter[argument].element.classList.add('img-filters__button--active');
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < newPicture.length; i++) {
-      fragment.appendChild(window.picture.renderPicture(newPicture[i], i));
+    for (var i = 0; i < createNewPicture.length; i++) {
+      fragment.appendChild(window.picture.renderPicture(createNewPicture[i], i));
     }
     uploadPhotoElement.appendChild(fragment);
   };
 
   var lastTimeout;
 
-  var timeButton = function (argument) {
+  var setTimeButton = function (argument) {
     if (lastTimeout) {
       window.clearTimeout(lastTimeout);
     }
     lastTimeout = setTimeout(function () {
-      forButton(argument);
+      pressButton(argument);
       lastTimeout = null;
     }, 500);
   };
 
   var filterButtonPopular = function () {
-    timeButton('popular');
+    setTimeButton('popular');
   };
 
   var filterButtonRandom = function () {
-    timeButton('random');
+    setTimeButton('random');
   };
 
   var filterButtonDiscussed = function () {
-    timeButton('discussed');
+    setTimeButton('discussed');
   };
 
 
   var onSuccess = function (data) {
     pictures = data;
-    forButton('popular');
+    pressButton('popular');
     var imgFilters = document.querySelector('.img-filters');
     imgFilters.classList.remove('img-filters--inactive');
     buttonFilter.popular.element.addEventListener('click', filterButtonPopular);

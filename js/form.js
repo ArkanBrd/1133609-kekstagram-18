@@ -9,7 +9,7 @@
   var uploadForm = document.querySelector('#upload-select-image');
 
   // Изначальное состояние поля для загрузки изображения
-
+  var imgUpload = uploadForm.querySelector('.img-upload__input');
 
   // Форма редактирования изображения
   var editImgFormOpen = uploadForm.querySelector('.img-upload__overlay');
@@ -30,9 +30,11 @@
   var effectLevelLine = document.querySelector('.effect-level__line');
   var effectLevelPin = document.querySelector('.effect-level__pin');
   var effectLevelDepth = effectLevelLine.querySelector('.effect-level__depth');
-  var imgUploadPreview = editImgFormOpen.querySelector('.img-upload__preview');
+  var imgUploadPreview = editImgFormOpen.querySelector('.img-upload__preview img');
 
+  var effectName = 'none';
   var swapFilters = function (effect, depth) {
+    imgUploadPreview.classList.remove(effectName);
     if (effect === 'none') {
       imgUploadEffectLevel.classList.add('hidden');
     } else {
@@ -43,14 +45,17 @@
       case 'chrome':
         imgUploadPreview.style.filter = 'grayscale(' + depth + ')';
         imgUploadPreview.classList.add('effect__preview--chrome');
+        effectName = 'chrome';
         break;
       case 'sepia':
         imgUploadPreview.style.filter = 'sepia(' + depth + ')';
         imgUploadPreview.classList.add('effect__preview--sepia');
+        effectName = 'sepia';
         break;
       case 'marvin':
         imgUploadPreview.style.filter = 'invert(' + depth * 100 + '%)';
         imgUploadPreview.classList.add('effect__preview--marvin');
+        effectName = 'marvin';
         break;
       case 'phobos':
         imgUploadPreview.style.filter = 'blur(' + (depth * 2) + 1 + 'px)';
@@ -59,9 +64,11 @@
       case 'heat':
         imgUploadPreview.style.filter = 'brightness(' + depth * 2 + ')';
         imgUploadPreview.classList.add('effect__preview--heat');
+        effectName = 'heat';
         break;
       case 'none':
         imgUploadPreview.style.filter = null;
+        effectName = 'none';
         break;
     }
     effectLevelPin.style.left = depth * 100 + '%';
@@ -128,6 +135,7 @@
     swapFilters('none', 1);
     imgUploadPreview.style.transform = 'scale(1)';
     textDiscription.value = '';
+    imgUpload.value = '';
   };
 
   var changeHandlerEffect = function (evt) {
