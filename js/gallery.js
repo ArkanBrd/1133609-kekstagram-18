@@ -19,14 +19,14 @@
     return pictures;
   };
   var filterRandom = function () {
-    var picturesRandom = [];
+    var randomPictures = [];
     var picturesCopy = pictures.slice();
     for (var i = 0; i < 10 && picturesCopy.length > 0; i++) {
       var randomNumber = Math.floor(Math.random() * picturesCopy.length);
-      picturesRandom.push(picturesCopy[randomNumber]);
+      randomPictures.push(picturesCopy[randomNumber]);
       picturesCopy.splice(randomNumber, 1);
     }
-    return picturesRandom;
+    return randomPictures;
   };
   var filterDiscussed = function () {
     var picturesCopy = pictures.slice();
@@ -57,12 +57,12 @@
       uploadPhotoElement.removeChild(classPicture[j]);
     }
     buttonFilter[filterName].element.classList.remove('img-filters__button--active');
-    var createNewPicture = buttonFilter[argument].method();
+    displayingPictures = buttonFilter[argument].method();
     filterName = argument;
     buttonFilter[argument].element.classList.add('img-filters__button--active');
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < createNewPicture.length; i++) {
-      fragment.appendChild(window.picture.renderPicture(createNewPicture[i], i));
+    for (var i = 0; i < displayingPictures.length; i++) {
+      fragment.appendChild(window.picture.render(displayingPictures[i], i));
     }
     uploadPhotoElement.appendChild(fragment);
   };
@@ -103,15 +103,16 @@
   };
 
   var pictures = [];
+  var displayingPictures = [];
 
   window.upload.loadPhoto(handlerSuccess, handlerError);
 
   picturesContainerImg.addEventListener('click', function (evt) {
     var aPicture = evt.target.closest('a.picture');
-    if (!aPicture) {
+    if (aPicture) {
       evt.preventDefault();
-      var index = evt.target.closest('a.picture').dataset['index'];
-      window.preview.openBigPicture(pictures[index]);
+      var index = aPicture.dataset['index'];
+      window.preview.openBigPicture(displayingPictures[index]);
     }
   });
 

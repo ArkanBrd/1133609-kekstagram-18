@@ -92,12 +92,7 @@
   var onDifEffects = function (evt) {
     var rectLine = effectLevelLine.getBoundingClientRect();
     var coordinateX = (evt.clientX - rectLine.left) / rectLine.width;
-    if (coordinateX < 0) {
-      coordinateX = 0;
-    }
-    if (coordinateX > 1) {
-      coordinateX = 1;
-    }
+    coordinateX = coordinateX < 0 ? 0 : (coordinateX > 1 ? 1 : coordinateX)
     swapFilters(uploadForm.effect.value, coordinateX);
   };
   effectLevelLine.addEventListener('mouseup', onDifEffects);

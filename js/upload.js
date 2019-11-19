@@ -3,8 +3,7 @@
 
 (function () {
   var URL = 'https://js.dump.academy/kekstagram';
-  var ifErrorExecute = function () {
-    var xhr = new XMLHttpRequest();
+  var ifErrorExecute = function (xhr, handlerSuccess, handlerError) {
     var error;
     switch (xhr.status) {
       case 200:
@@ -30,9 +29,12 @@
 
   window.upload = {
     loadPhoto: function (handlerSuccess, handlerError) {
+      var xhr = new XMLHttpRequest();
       xhr.responseType = 'json';
 
-      xhr.addEventListener('load', ifErrorExecute);
+      xhr.addEventListener('load', function () {
+        ifErrorExecute(xhr, handlerSuccess, handlerError);
+      });
 
       xhr.addEventListener('error', function () {
         handlerError('Ошибка с кодом ' + xhr.status);
@@ -46,7 +48,9 @@
       var xhr = new XMLHttpRequest();
       xhr.responseType = 'json';
 
-      xhr.addEventListener('load', ifErrorExecute);
+      xhr.addEventListener('load', function () {
+        ifErrorExecute(xhr, handlerSuccess, handlerError);
+      });
       xhr.open('POST', URL);
       xhr.send(data);
     }

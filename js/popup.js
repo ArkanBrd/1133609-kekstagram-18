@@ -29,6 +29,10 @@
         }
       };
 
+      var buttonErrorClose = function () {
+          errorClose();
+      };
+
       document.addEventListener('keydown', escClose);
       document.addEventListener('click', clickClose);
 
@@ -36,9 +40,6 @@
       var errorInner = errorElement.querySelector('.error__inner');
       var buttonError = errorElement.querySelectorAll('.error__button');
       errorElement.querySelector('.error__title').textContent = error;
-      var buttonErrorClose = function () {
-          errorClose();
-      };
       for (var i = 0; i < buttonError.length; i++) {
         buttonError[i].addEventListener('click', buttonErrorClose);
       }

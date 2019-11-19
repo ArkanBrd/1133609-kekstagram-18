@@ -4,7 +4,7 @@
 (function () {
   var uploadPhotoTemplate = document.querySelector('#picture');
   window.picture = {
-    renderPicture: function (picture, index) {
+    render: function (picture, index) {
       var pictureElement = uploadPhotoTemplate.content.cloneNode(true);
       pictureElement.querySelector('a.picture').dataset['index'] = index;
 
