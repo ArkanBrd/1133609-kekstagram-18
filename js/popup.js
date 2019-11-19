@@ -24,6 +24,9 @@
         mainPhoto.removeChild(errorElement);
         document.removeEventListener('keydown', escClose);
         document.removeEventListener('click', clickClose);
+        for (var i = 0; i < buttonError.length; i++) {
+          buttonError[i].removeEventListener('click', buttonErrorClose);
+        }
       };
 
       document.addEventListener('keydown', escClose);
@@ -33,10 +36,11 @@
       var errorInner = errorElement.querySelector('.error__inner');
       var buttonError = errorElement.querySelectorAll('.error__button');
       errorElement.querySelector('.error__title').textContent = error;
-      for (var i = 0; i < buttonError.length; i++) {
-        buttonError[i].addEventListener('click', function () {
+      var buttonErrorClose = function () {
           errorClose();
-        });
+      };
+      for (var i = 0; i < buttonError.length; i++) {
+        buttonError[i].addEventListener('click', buttonErrorClose);
       }
       mainPhoto.appendChild(errorElement);
     },

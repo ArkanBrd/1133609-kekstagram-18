@@ -4,11 +4,11 @@
 (function () {
   var uploadPhotoElement = document.querySelector('.pictures');
   var picturesContainerImg = document.querySelector('.pictures.container');
-  var firstuploadFormOpen = document.querySelector('#upload-file');
+  var firstUploadFormOpen = document.querySelector('#upload-file');
   var errorLoad = document.querySelector('#error');
   var mainPhoto = document.querySelector('main');
 
-  var onError = function (error) {
+  var handlerError = function (error) {
     var errorElement = errorLoad.content.cloneNode(true);
     errorElement.querySelector('.error__title').textContent = error;
     mainPhoto.appendChild(errorElement);
@@ -19,14 +19,14 @@
     return pictures;
   };
   var filterRandom = function () {
-    var pictureRandom = [];
+    var picturesRandom = [];
     var picturesCopy = pictures.slice();
     for (var i = 0; i < 10 && picturesCopy.length > 0; i++) {
       var randomNumber = Math.floor(Math.random() * picturesCopy.length);
-      pictureRandom.push(picturesCopy[randomNumber]);
+      picturesRandom.push(picturesCopy[randomNumber]);
       picturesCopy.splice(randomNumber, 1);
     }
-    return pictureRandom;
+    return picturesRandom;
   };
   var filterDiscussed = function () {
     var picturesCopy = pictures.slice();
@@ -92,7 +92,7 @@
   };
 
 
-  var onSuccess = function (data) {
+  var handlerSuccess = function (data) {
     pictures = data;
     pressButton('popular');
     var imgFilters = document.querySelector('.img-filters');
@@ -104,18 +104,18 @@
 
   var pictures = [];
 
-  window.upload.loadPhoto(onSuccess, onError);
+  window.upload.loadPhoto(handlerSuccess, handlerError);
 
   picturesContainerImg.addEventListener('click', function (evt) {
     var aPicture = evt.target.closest('a.picture');
-    if (aPicture !== null) {
+    if (!aPicture) {
       evt.preventDefault();
       var index = evt.target.closest('a.picture').dataset['index'];
       window.preview.openBigPicture(pictures[index]);
     }
   });
 
-  firstuploadFormOpen.addEventListener('change', window.form.uploadFormOpen);
+  firstUploadFormOpen.addEventListener('change', window.form.uploadFormOpen);
 
 
 })();

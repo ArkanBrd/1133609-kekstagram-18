@@ -2,8 +2,8 @@
 'use strict';
 
 (function () {
-  var SCALEDEFAULT = 1;
-  var STEPSCALE = 0.25;
+  var SCALE_DEFAULT = 1;
+  var STEP_SCALE = 0.25;
 
   // Поле для загрузки нового изображения на сайт
   var uploadForm = document.querySelector('#upload-select-image');
@@ -117,7 +117,7 @@
     uploadFormOpen: function () {
       uploadOpen();
       swapFilters(uploadForm.effect.value, 1);
-      scaleControl.value = SCALEDEFAULT * 100 + '%';
+      scaleControl.value = SCALE_DEFAULT * 100 + '%';
 
       document.addEventListener('keydown', uploadEscClose);
 
@@ -129,7 +129,7 @@
     editImgFormOpen.classList.add('hidden');
     editImgFormClose.removeEventListener('click', uploadCancel);
     document.removeEventListener('keydown', uploadEscClose);
-    currentScale = SCALEDEFAULT;
+    currentScale = SCALE_DEFAULT;
     uploadForm.hashtags.value = '';
     uploadForm.effect.value = 'none';
     swapFilters('none', 1);
@@ -152,19 +152,19 @@
   effectList.addEventListener('change', changeHandlerEffect);
 
   // Функция нажатия на "-" и "+"
-  var currentScale = SCALEDEFAULT;
+  var currentScale = SCALE_DEFAULT;
   var onButtonMinusClick = function () {
     if (currentScale > 0.25) {
-      currentScale = currentScale - STEPSCALE;
+      currentScale = currentScale - STEP_SCALE;
       scaleControl.value = currentScale * 100 + '%';
       imgUploadPreview.style.transform = 'scale(' + currentScale + ')';
     }
   };
 
   var onButtonPlusClick = function () {
-    scaleControl.scale = SCALEDEFAULT;
+    scaleControl.scale = SCALE_DEFAULT;
     if (currentScale < 1) {
-      currentScale = currentScale + STEPSCALE;
+      currentScale = currentScale + STEP_SCALE;
       scaleControl.value = currentScale * 100 + '%';
       imgUploadPreview.style.transform = 'scale(' + currentScale + ')';
     }
@@ -220,17 +220,17 @@
   uploadForm.description.addEventListener('change', handlerDescriptionUplodForm);
 
 
-  var onError = function (error) {
+  var handlerError = function (error) {
     window.popup.errorShow(error);
     uploadCancel();
   };
-  var onSuccess = function () {
+  var handlerSuccess = function () {
     window.popup.successShow();
     uploadCancel();
   };
 
   uploadForm.addEventListener('submit', function (evt) {
-    window.upload.uploadPost(new FormData(uploadForm), onSuccess, onError);
+    window.upload.uploadPost(new FormData(uploadForm), handlerSuccess, handlerError);
     evt.preventDefault();
   });
 })();
