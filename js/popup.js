@@ -30,7 +30,7 @@
       };
 
       var buttonErrorClose = function () {
-          errorClose();
+        errorClose();
       };
 
       document.addEventListener('keydown', escClose);
